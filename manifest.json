@@ -1,0 +1,26 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Twitch Category Change Notifier",
+    "description": "Know when your favorite streamers are changing categories",
+    "version": "1.0.1",
+    "manifest_version": 3,
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1uE11ize3U8cy0zr3m1R8HxA1cDMAMGadNOP2v/HRVa7n3Td1Zm8Aj6wlYodv6emLzXRGF/WhAaKQatX97Hkm8Q2HQZ+CVoyCw7X5oD3VIZo3m+K2mmB9ViPdkQXWzITxZcGuA9KdxamragF9QG62UXEPAeEuajQQvfYlK4jdjNmXhT8lXa2aAJ3/G9x2x8GcRfzwi64K9/r0gV4GEyq0E91QQou4O8mw3eqTNbZ8DjhyhHJJAiEmghlz73st2UUCyCYDZT26J2KoKFa3oVXgkGpLoC/Z0C/i76lLhP6RjKB3WniWCS0HNmn4yPNkgTg+Evv2ogC/NzqEJRz/sMYEQIDAQAB",
+    "background": {
+        "service_worker": "background.js"
+    },"host_permissions": ["<all_urls>"],
+    "permissions": ["storage", "alarms", "scripting", "activeTab", "background"],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "icons": {
+        "256": "images/icon.png"
+    },
+    "externally_connectable": {
+        "matches": ["https://strikr.alwaysdata.net/*"]
+    },
+    "web_accessible_resources": [{
+        "resources": ["test.js"],
+        "matches": ["<all_urls>"]
+    }]
+}

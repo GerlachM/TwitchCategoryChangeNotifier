@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style/mainframe.css" />
+        <link rel="stylesheet" href="style/bottombar.css" />
+        <link rel="stylesheet" href="style/checkbox.css" />
+        <link rel="stylesheet" href="style/tail.css" />
+
+        <script src="scripts/j.js"></script>
+        <script src="scripts/popup.js"></script>
+        <script src="scripts/tabs.js"></script>
+        <script src="scripts/tab_notifications.js"></script>
+        <script src="scripts/tail.js"></script>
+    </head>
+    <body>
+        <div id="top-bar">
+            <input id="searchbox" type="text" placeholder="Search Followed Streams" autofocus style="display: none;" />
+            <div id="disconnected-tip" style="display: inline-block;font-size:10px">TTV Category Change Notifier</div>
+            <div id="login-twitch">
+                <a href="https://id.twitch.tv/oauth2/authorize?client_id=eqtazaq0deq04n6k4s50zoujhyt5nu&redirect_uri=https://strikr.alwaysdata.net/&response_type=token&scope=user:read:follows" target="_blank"><button>Login with Twitch</button></a>
+            </div>
+            <div id="user-infos-top" style="display: none;" title="Click to disconnect">
+                <img id="user-pic-top" src="https://static-cdn.jtvnw.net/jtv_user_pictures/599b546a-c27f-4684-93ff-5eeecd01fb2b-profile_image-300x300.png" />
+                <span style="color:white;padding-right: 20px;font-size: 14px;line-height: 2.5;">Click here to Logout.</span><span id="username-top">Twitch User</span>
+            </div>
+        </div>
+        <div id="disconnected-stream-tip" style="display: block;">
+            <h3> </h3>
+            <p style="padding: 5px;">Don't like the current game a streamer is playing? <br><br> Waiting for a streamer to finally start playing something? <br><br> Missed another watch party because it was unannounced? <br><br></p>
+            <h3 style="padding: 5px;">Login with your Twitch account and create alerts for your individual use case.</h3>
+            <div style="
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    padding: 5px 5px;
+    position: fixed;
+    bottom: 0;
+    font-size: 11px;
+    text-align: left;
+">
+                <a href="https://www.paypal.com/donate/?hosted_button_id=9Z7WPBS5YRJBS" target="_blank"><input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button"></a>
+                <span style="color:white">I am very grateful for PayPal donations, even smol ones. -<span style="font-style: italic; font-weight: 900">ttv/Strikr</span></span>
+
+            </div>
+        </div>
+        <div class="tab" id="notifications-page" style="display: none;">
+            <img class="loading" src="images/loading.svg" />
+
+
+            <div id="notify-all-streams" style="display: none;">
+
+                    <input id="notify-all-streams-checkbox" class="checkbox" type=checkbox >
+
+            </div>
+
+            <div style="
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    padding: 5px 0;
+    position: fixed;
+    bottom: 0;
+    font-size: 11px;
+     text-align: left;
+">
+                <a href="https://www.paypal.com/donate/?hosted_button_id=9Z7WPBS5YRJBS" target="_blank"><input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button"></a>
+                <span style="color:white">I am very grateful for PayPal donations, even smol ones. -<span style="font-style: italic; font-weight: 900">ttv/Strikr</span></span>
+
+            </div>
+
+
+            <div id="notifications">
+                <div class="separator">Add new Alert?</div>
+                <div id="alertcreator"></div>
+            </div>
+
+
+            <h2 style="color:white">Currently active Alerts:</h2>
+            <div class="all-alerts">
+            </div>
+
+
+
+            <div id="informations" style="display: block;">
+                <span id="last-streams-update"></span>
+            </div>
+        </div>
+        <div id="bottom-bar" style="display: block;">
+            <div class="icon" style="display: none; width: 25px; height: 25px; margin-top: 5px; margin-left: 4px;"></div>
+            <div id="tabs">
+
+                <div class="tab-button" id="streams-notifications-button">
+                  </div>
+            </div>
+        </div>
+    </body>
+</html>

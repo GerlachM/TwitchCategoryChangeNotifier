@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <style>
+            html, body {
+
+            }
+        </style>
+        <script>
+            var ExtensionID = "";
+            var twitchToken = "none";
+
+            function messageExtention() {
+                chrome.runtime.sendMessage(ExtensionID, {requestType: "setTtvToken", ttvToken: getHashParameters("access_token")},
+                function(response) {
+                    if (response.status == "success") {
+                        document.getElementById("mainMessage").innerHTML = "Logged in successfully! You can close this tab now.";
+                    } else {
+                        document.getElementById("mainMessage").innerText = "An issue occured!<br />(" + response.status + ")";
+                    }
+                })
+            }
+
+            function getHashParameters(hashname) {
+                var hashParams = new Map();
+
+                window.location.hash.substr(1).split('&').forEach(function(element) {
+                    let newElem = element.split('=');
+                    hashParams.set(newElem[0], newElem[1]);
+                })
+
+                return (hashParams.get(hashname));
+            }
+
+            window.addEventListener("load", function() {
+                messageExtention();
+            });
+        </script>
+    </head>
+    <body>
+        <div id="mainMessage">Please wait a few seconds...</div>
+    </body>
+</html>
