@@ -265,6 +265,9 @@ function refresh(ttvToken, ttvUser) {
 
 
 async function currentTabHandlesCategoryChangeNotification(new_category_changes) {
+	console.log('currentTabHandlesCategoryChangeNotification');
+		console.log(new_category_changes);
+
     /**
      * (c) David Konrad 2018-
      * MIT License
@@ -495,7 +498,12 @@ async function currentTabHandlesNotification(streamers) {
 }
 
 
-function newCategoryNotification(new_category_changes) {
+function newCategoryNotification(new_category_changes, tries=1, max_tries=10) {
+	console.log("newCategoryNotification tries:"+tries);
+	if (tries > max_tries) {
+		console.warn("newCategoryNotification did not work after " + max_tries + " tries"); 
+		return;
+	}
 
     chrome.tabs.query({active: true, currentWindow: true}).then(([tab]) => {
 
@@ -505,11 +513,20 @@ function newCategoryNotification(new_category_changes) {
                 //files: ['test.js'],
                 function: currentTabHandlesCategoryChangeNotification,
                 args: [new_category_changes],
-            });
+            }).catch(err => setTimeout(
+			function(){ 
+				console.warn("chrome.scripting.executeScrip, retry newCategoryNotification.."); 
+				newCategoryNotification(new_category_changes,tries+1); 
+			}, 60000))
 
 
+			
 
-    }).catch(err => setTimeout(function(){ newCategoryNotification(new_category_changes); }, 5000))
+    }).catch(err => setTimeout(
+			function(){ 
+				console.warn("chrome.tabs.query, retry newCategoryNotification.."); 
+				newCategoryNotification(new_category_changes,tries+1); 
+			}, 60000))
 }
 
 function newNotification(streamers) {
