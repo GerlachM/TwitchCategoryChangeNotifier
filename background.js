@@ -497,15 +497,32 @@ async function currentTabHandlesNotification(streamers) {
     }
 }
 
+var qu = [];
 
-function newCategoryNotification(new_category_changes, tries=1, max_tries=10) {
-	console.log("newCategoryNotification tries:"+tries);
-	if (tries > max_tries) {
-		console.warn("newCategoryNotification did not work after " + max_tries + " tries"); 
-		return;
-	}
+chrome.alarms.create("alert", {
+    "delayInMinutes": 0.1,
+    "periodInMinutes": 0.1
+});
 
-    chrome.tabs.query({active: true, currentWindow: true}).then(([tab]) => {
+chrome.alarms.onAlarm.addListener(function(alarm) {
+  if(alarm.name === "alert"){
+      tryAlert();
+  }
+});
+
+chrome.tabs.onActivated.addListener(function(activeInfo) {
+    tryAlert();
+});
+
+function tryAlert() {
+	console.log("tryAlert with current qu:");
+	console.log(qu);
+	
+	var temp = qu;
+	qu = [];
+	
+	 temp.forEach(function (new_category_changes) {
+            chrome.tabs.query({active: true, currentWindow: true}).then(([tab]) => {
 
         chrome.scripting.executeScript(
             {
@@ -513,20 +530,25 @@ function newCategoryNotification(new_category_changes, tries=1, max_tries=10) {
                 //files: ['test.js'],
                 function: currentTabHandlesCategoryChangeNotification,
                 args: [new_category_changes],
-            }).catch(err => setTimeout(
-			function(){ 
-				console.warn("chrome.scripting.executeScrip, retry newCategoryNotification.."); 
-				newCategoryNotification(new_category_changes,tries+1); 
-			}, 60000))
+            }).catch(err => fail("chrome.scripting.executeScrip, retry tryAlert..", new_category_changes))
 
 
 			
 
-    }).catch(err => setTimeout(
-			function(){ 
-				console.warn("chrome.tabs.query, retry newCategoryNotification.."); 
-				newCategoryNotification(new_category_changes,tries+1); 
-			}, 60000))
+    }).catch(err => fail("chrome.scripting.executeScrip, retry tryAlert..", new_category_changes))
+    });
+}
+
+function fail(msg,new_category_changes) {
+	console.warn(msg);
+	qu.push(new_category_changes);
+}
+
+
+function newCategoryNotification(new_category_changes, tries=1, max_tries=10) {
+	console.log("newCategoryNotification, push to qu");
+	console.log(new_category_changes);
+	qu.push(new_category_changes);
 }
 
 function newNotification(streamers) {
